@@ -3,7 +3,6 @@ import tensorflow as tf
 from tensorflow import keras
 import pandas as pd
 import numpy as np
-from sklearn.preprocessing import LabelEncoder, MinMaxScaler
 import joblib
 from google.cloud import storage
 import os
@@ -31,8 +30,7 @@ if not os.path.exists(temp_model_path):
         temp_model_file.write(model_file.read())
     
 # Load model using TensorFlow
-model = tf.keras.models.load_model(temp_model_path)
-#load model
+model = keras.models.load_model(temp_model_path)
 
 # Load MinMaxScaler
 loaded_mm_scaler = joblib.load('mm_scaler.joblib')

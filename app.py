@@ -3,34 +3,14 @@ import tensorflow as tf
 from tensorflow import keras
 import pandas as pd
 import numpy as np
+import sklearn
 import joblib
-from google.cloud import storage
 import os
 from io import BytesIO
 
 app = Flask(__name__)
-bucket_name = 'nutricare'
-model_filename = 'Klasifikasi_Obesitas.h5'
-storage_client = storage.Client.from_service_account_json('cloud-storage.json')
-
-temp_model_path = 'download/temp_model.h5'
-
-# Memeriksa apakah file sudah ada
-if not os.path.exists(temp_model_path):
-    # Jika belum ada, lakukan pengunduhan
-    bucket = storage_client.get_bucket(bucket_name)
-    blob = bucket.blob(model_filename)
-
-    model_file = BytesIO()
-    blob.download_to_file(model_file)
-    model_file.seek(0)
-
-    # Menyimpan file ke lokasi lokal
-    with open(temp_model_path, 'wb') as temp_model_file:
-        temp_model_file.write(model_file.read())
-    
-# Load model using TensorFlow
-model = keras.models.load_model(temp_model_path)
+#load model
+model = keras.models.load_model('Klasifikasi_Obesitas.h5')
 
 # Load MinMaxScaler
 loaded_mm_scaler = joblib.load('mm_scaler.joblib')

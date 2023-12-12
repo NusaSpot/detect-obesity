@@ -58,4 +58,4 @@ def predict_obesitas():
         return jsonify({'status': 'ERROR', 'message': 'No file provided.'}), 400
     
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0', port=8080)
